@@ -1,0 +1,29 @@
+.planet {
+    fill-opacity: 0.4;
+    stroke: #fff;
+    stroke-width: 0.5;
+    stroke-opacity: 0.6;
+}
+
+body {
+    font-family: "Open Sans";
+    margin: 0;
+    background-color: rgb(208, 240, 240);
+}
+
+#main {
+    margin: 0;
+}
+
+.text {
+    fill: black;
+}
+
+.axis text {
+    fill: black;
+}
+
+.axis path,
+.axis line {
+    stroke: black;
+}
