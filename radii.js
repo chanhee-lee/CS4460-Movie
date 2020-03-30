@@ -1,9 +1,11 @@
+var movieArr = [];
+var movieIntervalData = [];
+const MINUTE = 5; 
+
 export function radii(movieMap) {
-    var movieArr = [];
-    var movieIntervalData = [];
+    
     // Select svg
     var svg = d3.select('svg');
-    const MINUTE = 5; 
  	// Load tarantino wordcount dataset
     var wordDate = d3.csv('tarantino.csv').then(function(dataset) {
     	// Setup movie arrays 
@@ -26,7 +28,6 @@ export function radii(movieMap) {
         	}
         	movieIntervalData.push({"title": element.title, "intervalData": intervalData});
         })
-        console.log(movieIntervalData);
 
         var color = ["#ff0000", "#ff4400", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#7f00ff"]
 
@@ -56,7 +57,7 @@ export function radii(movieMap) {
 		    }
 			var data = movieIntervalData[i].intervalData;
 
-		    createArc(arcInterval, data, inner, outer, color[i]);
+		    createArc(arcInterval, data, inner, outer, color[i], movieArr[i].duration);
 		    inner += 20; 
 		    outer += 20;
 	  	}
@@ -71,7 +72,7 @@ export function radii(movieMap) {
 * innerRadius: Inner radius size of arc
 * outerRadius: Outer radius size of arc
 */
-function createArc(arcInterval, data, innerRadius, outerRadius, color) {
+function createArc(arcInterval, data, innerRadius, outerRadius, color, movieLength) {
 	var svg = d3.select("svg"),
         width = svg.attr("width"),
         height = svg.attr("height"),
@@ -96,8 +97,8 @@ function createArc(arcInterval, data, innerRadius, outerRadius, color) {
     //Draw arc paths
     arcs.append("path")
         .attr("fill", function(d, i) {
-        	// Calculate color 
-        	return getColor(color, 5, data[i]);
+        	console.log(i);
+        	return i < movieLength / MINUTE ? getColor(color, 18, data[i]) : "#000000"
         })
         .attr("d", arc);
 }
@@ -110,6 +111,6 @@ function createArc(arcInterval, data, innerRadius, outerRadius, color) {
 */
 function getColor(base, total, current) {
 	var c = d3.hsl(base);
-	c.s = current / total; 
+	c.s = current / total;
 	return c; 
 }
