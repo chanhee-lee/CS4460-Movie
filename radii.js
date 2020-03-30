@@ -73,19 +73,17 @@ export function radii(movieMap) {
 * outerRadius: Outer radius size of arc
 */
 function createArc(arcInterval, data, innerRadius, outerRadius, color, movieLength) {
-	var svg = d3.select("svg"),
-        width = svg.attr("width"),
-        height = svg.attr("height"),
-        radius = Math.min(width, height) / 4,
-        g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+	var svg = d3.select("svg");
+    var width = svg.attr("width");
+    var height = svg.attr("height");
+    var radius = Math.min(width, height) / 4;
+    var g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
     // Generate the pie
     var pie = d3.pie();
 
     // Generate the arcs
-    var arc = d3.arc()
-                .innerRadius(innerRadius)
-                .outerRadius(outerRadius);
+    var arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
 
     //Generate groups
     var arcs = g.selectAll("arc")
@@ -94,7 +92,7 @@ function createArc(arcInterval, data, innerRadius, outerRadius, color, movieLeng
                 .append("g")
                 .attr("class", "arc")
 
-    //Draw arc paths
+    //Draw arc paths (separating intervals)
     arcs.append("path")
         .attr("fill", function(d, i) {
         	console.log(i);
