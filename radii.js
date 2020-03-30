@@ -3,8 +3,8 @@ var movieIntervalData = [];
 const MINUTE = 5; 
 
 export function radii(movieMap) {
-    
     // Select svg
+    var main = d3.select('#main');
     var svg = d3.select('svg');
  	// Load tarantino wordcount dataset
     var wordDate = d3.csv('tarantino.csv').then(function(dataset) {
@@ -29,22 +29,11 @@ export function radii(movieMap) {
         	movieIntervalData.push({"title": element.title, "intervalData": intervalData});
         })
 
-        var color = ["#ff0000", "#ff4400", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#7f00ff"]
+        // Setup Colors for Movies
+        var color = ["#ff0000", "#ffa500", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#7f00ff"]
 
-        var svg = d3.select('svg');
-
-        var selector = d3.select('body')
-            .append("select")
-            .attr("id", "filmselector")
-            .selectAll("option")
-            .data(movieArr)
-            .enter().append("option")
-            .text(function(d) {
-                return d.title;
-            })
-            .attr("value", function(d) {
-                return d.title;
-            })   
+        // Setup Legend 
+        // createLegend(main);
 
 	  	// For Each Movie: Make circle 
 	  	var inner = 10;
@@ -62,6 +51,13 @@ export function radii(movieMap) {
 		    outer += 20;
 	  	}
     })	
+}
+
+function createLegend(main) {
+    main.append("input").attr("type", "checkbox").attr("id", "testing1");
+    main.append("label").text("Reservoir Dogs").attr("style","color: #ff0000");
+    main.append("input").attr("type", "checkbox").attr("id", "testing2");
+    main.append("label").text("Pulp Fiction").attr("style","color: #ffa500");
 }
 
 /**
