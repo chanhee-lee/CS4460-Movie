@@ -13,20 +13,28 @@ export function radii(movieMap) {
         movieMap.forEach(element => {
         	// Calculate in interval 
         	var intervalData = [];
+        	var intervalWords = [];
         	for (var i = 0; i < 180; i += 5) {
         		// Get profanity in interval 
         		var start = i; 
         		var end = i+5; 
         		var counter = 0;
+	        	var wordDict = {};
         		// Oh god this is so inefficient so if there's time we'll find a better way to do this 
         		for (var j = 0; j < dataset.length; j++) {
         			if (dataset[j].movie === element.title && dataset[j].minutes >= start && dataset[j].minutes < end) {
         				counter++;
+        				if (dataset[j].word in wordDict === false) {
+        					wordDict[dataset[j].word] = 1;
+        				} else {
+        					wordDict[dataset[j].word] += 1;
+        				}
         			}
         		}
         		intervalData.push(counter);
+        		intervalWords.push(wordDict);
         	}
-        	movieIntervalData.push({"title": element.title, "intervalData": intervalData});
+        	movieIntervalData.push({"title": element.title, "intervalData": intervalData, "intervalWords": intervalWords});
         })
 
         // Setup Colors for Movies
@@ -80,6 +88,13 @@ function createArc(arcInterval, data, innerRadius, outerRadius, color, movieLeng
 
     // Generate the arcs
     var arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
+    console.log(arcInterval);
+
+    // Make tooltip
+    var toolTip = d3.select('body').append('div')
+    			.attr('class', 'tooltip-profanity')
+    			.style('opacity', 0);
+
 
     //Generate groups
     var arcs = g.selectAll("arc")
@@ -87,6 +102,24 @@ function createArc(arcInterval, data, innerRadius, outerRadius, color, movieLeng
                 .enter()
                 .append("g")
                 .attr("class", "arc")
+                .on('mouseover', function (d, i) {
+                	d3.select(this).transition()
+                		.duration('50')
+                		.attr('opacity', '0.85');
+
+                	toolTip.transition()
+                		.duration('50')
+                		.attr('opacity', 1);
+                })
+                .on('mouseout', function (d, i) {
+                	d3.select(this).transition()
+                		.duration('50')
+                		.attr('opacity', '1');
+
+                	toolTip.transition()
+                		.duration('50')
+                		.attr('opacity', 0);
+                });
 
     //Draw arc paths (separating intervals)
     arcs.append("path")
