@@ -36,6 +36,7 @@ export function radii(movieMap) {
         	}
         	movieIntervalData.push({"title": element.title, "intervalData": intervalData, "intervalWords": intervalWords});
         })
+        console.log(movieIntervalData)
 
         // Setup Colors for Movies
         var color = ["#ff0000", "#ffa500", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#7f00ff"]
@@ -53,8 +54,9 @@ export function radii(movieMap) {
 		    	arcInterval.push(1);
 		    }
 			var data = movieIntervalData[i].intervalData;
+			var wordData = movieIntervalData[i].intervalWords;
 
-		    createArc(arcInterval, data, inner, outer, color[i], movieArr[i].duration);
+		    createArc(arcInterval, data, wordData, inner, outer, color[i], movieArr[i].duration);
 		    inner += 20; 
 		    outer += 20;
 	  	}
@@ -76,7 +78,7 @@ function createLegend(main) {
 * innerRadius: Inner radius size of arc
 * outerRadius: Outer radius size of arc
 */
-function createArc(arcInterval, data, innerRadius, outerRadius, color, movieLength) {
+function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength) {
 	var svg = d3.select("svg");
     var width = svg.attr("width");
     var height = svg.attr("height");
@@ -88,7 +90,6 @@ function createArc(arcInterval, data, innerRadius, outerRadius, color, movieLeng
 
     // Generate the arcs
     var arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
-    console.log(arcInterval);
 
     // Make tooltip
     var toolTip = d3.select('body').append('div')
@@ -106,25 +107,39 @@ function createArc(arcInterval, data, innerRadius, outerRadius, color, movieLeng
                 	d3.select(this).transition()
                 		.duration('50')
                 		.attr('opacity', '0.85');
-
-                	toolTip.transition()
-                		.duration('50')
-                		.attr('opacity', 1);
+                	if (this.fill === '#000000') {
+                		toolTip.transition()
+	                		.duration('50')
+	                		.style('opacity', 0);
+                	} else {	
+	                	toolTip.transition()
+	                		.duration('50')
+	                		.style('opacity', 1);
+	                	if (i < movieLength / MINUTE) {
+	                		if (Object.keys(wordData[i].length !== 0)) {
+	                			var highestVal = Math.max.apply(null, Object.values(wordData[i]))
+			                	var mostUsed = Object.keys(wordData[i]).find(function(a) {
+			                		return wordData[i][a] === highestVal;
+			                	})
+			                	toolTip.html('Most Used Word: ' + mostUsed)
+			                		.style('left', (d3.event.pageX + 10) + 'px')
+			                		.style('top', (d3.event.pageY - 15) + 'px');
+		                	}
+	                	}
+                	}
                 })
                 .on('mouseout', function (d, i) {
                 	d3.select(this).transition()
                 		.duration('50')
                 		.attr('opacity', '1');
-
                 	toolTip.transition()
                 		.duration('50')
-                		.attr('opacity', 0);
+                		.style('opacity', 0);
                 });
 
     //Draw arc paths (separating intervals)
     arcs.append("path")
         .attr("fill", function(d, i) {
-        	console.log(i);
         	return i < movieLength / MINUTE ? getColor(color, 18, data[i]) : "#000000"
         })
         .attr("d", arc);
