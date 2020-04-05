@@ -107,7 +107,7 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
                 	d3.select(this).transition()
                 		.duration('50')
                 		.attr('opacity', '0.85');
-                	if (this.fill === '#000000') {
+                	if (i >= movieLength / MINUTE) {
                 		toolTip.transition()
 	                		.duration('50')
 	                		.style('opacity', 0);
@@ -115,17 +115,21 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
 	                	toolTip.transition()
 	                		.duration('50')
 	                		.style('opacity', 1);
-	                	if (i < movieLength / MINUTE) {
-	                		if (Object.keys(wordData[i].length !== 0)) {
-	                			var highestVal = Math.max.apply(null, Object.values(wordData[i]))
-			                	var mostUsed = Object.keys(wordData[i]).find(function(a) {
-			                		return wordData[i][a] === highestVal;
-			                	})
-			                	toolTip.html('Most Used Word: ' + mostUsed)
-			                		.style('left', (d3.event.pageX + 10) + 'px')
-			                		.style('top', (d3.event.pageY - 15) + 'px');
+	                	if (Object.keys(wordData[i].length !== 0)) {
+                			var highestVal = Math.max.apply(null, Object.values(wordData[i]))
+		                	var mostUsed = Object.keys(wordData[i]).find(function(a) {
+		                		return wordData[i][a] === highestVal;
+		                	})
+		                	if (mostUsed === '') {
+		                		mostUsed = 'Death';
+		                	} else if (typeof mostUsed === 'undefined') {
+		                		mostUsed = 'N/A';
 		                	}
-	                	}
+		                	toolTip.html('Most Common Profanity: ' + mostUsed + '<br>'
+		                		+ 'Total Profanity: ' + data[i])
+		                		.style('left', (d3.event.pageX + 10) + 'px')
+		                		.style('top', (d3.event.pageY - 15) + 'px');
+		                }
                 	}
                 })
                 .on('mouseout', function (d, i) {
