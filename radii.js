@@ -125,8 +125,8 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
 		                	} else if (typeof mostUsed === 'undefined') {
 		                		mostUsed = 'N/A';
 		                	}
-		                	toolTip.html('Most Common Profanity: ' + mostUsed + '<br>'
-		                		+ 'Total Profanity: ' + data[i])
+		                	toolTip.html('Most Common Profanity: '.bold() + mostUsed + '<br>'
+		                		+ 'Total Profanity: '.bold() + data[i])
 		                		.style('left', (d3.event.pageX + 10) + 'px')
 		                		.style('top', (d3.event.pageY - 15) + 'px');
 		                }
