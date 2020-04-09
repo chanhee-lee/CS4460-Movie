@@ -1,6 +1,7 @@
 var movieArr = [];
 var movieIntervalData = [];
 const MINUTE = 5; 
+const SIZE = 20; 
 
 export function radii(movieMap) {
     // Select svg
@@ -14,10 +15,10 @@ export function radii(movieMap) {
         	// Calculate in interval 
         	var intervalData = [];
         	var intervalWords = [];
-        	for (var i = 0; i < 180; i += 5) {
+        	for (var i = 0; i < 180; i += MINUTE) {
         		// Get profanity in interval 
         		var start = i; 
-        		var end = i+5; 
+        		var end = i+MINUTE; 
         		var counter = 0;
 	        	var wordDict = {};
         		// Oh god this is so inefficient so if there's time we'll find a better way to do this 
@@ -45,8 +46,8 @@ export function radii(movieMap) {
         // createLegend(main);
 
 	  	// For Each Movie: Make circle 
-	  	var inner = 10;
-	  	var outer = 20;
+	  	var inner = SIZE;
+	  	var outer = SIZE * 2;
 	  	for (var i = 0; i < movieArr.length; i++) {
 		    // Make circles based on data 
 		    var arcInterval = new Array(); 	// 
@@ -57,8 +58,8 @@ export function radii(movieMap) {
 			var wordData = movieIntervalData[i].intervalWords;
 
 		    createArc(arcInterval, data, wordData, inner, outer, color[i], movieArr[i].duration);
-		    inner += 20; 
-		    outer += 20;
+		    inner += SIZE * 2; 
+		    outer += SIZE * 2;
 	  	}
     })	
 }
