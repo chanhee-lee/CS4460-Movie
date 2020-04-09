@@ -21,11 +21,11 @@ body {
 }
 
 .text {
-    fill: black;
+    fill: white;
 }
 
 .axis text {
-    fill: black;
+    fill: white;
 }
 
 .axis path,

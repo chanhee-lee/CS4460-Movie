@@ -3,10 +3,12 @@ var movieIntervalData = [];
 const MINUTE = 5; 
 const SIZE = 20; 
 
+//alert("DISCLAIMER: contains profanity that some may deem innapropriate or offensive");
+
 export function radii(movieMap) {
     // Select svg
     var main = d3.select('#main');
-    var svg = d3.select('svg');
+	var svg = d3.select('svg');
  	// Load tarantino wordcount dataset
     var wordDate = d3.csv('tarantino.csv').then(function(dataset) {
     	// Setup movie arrays 
@@ -40,7 +42,8 @@ export function radii(movieMap) {
         console.log(movieIntervalData)
 
         // Setup Colors for Movies
-        var color = ["#ff0000", "#ffa500", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#7f00ff"]
+		// var color = ["#A7CEE3", "#1F78B4", "#B3DF8A", "#34A02D", "#FB9B9A", "#E31B1B", "#FDC070"]
+		var color = ["#ff0000", "#FF8C00", "#CCCC00", "#32CD32", "#0000ff", "#9400D3", "#e75480"]
 
         // Setup Legend 
         createLegend(svg, movieArr, color);
@@ -61,7 +64,8 @@ export function radii(movieMap) {
 		    inner += SIZE * 2; 
 		    outer += SIZE * 2;
 	  	}
-    })	
+	})	
+
 }
 
 function createLegend(svg, movieArr, colorArr) {
@@ -97,6 +101,34 @@ function createLegend(svg, movieArr, colorArr) {
 */
 function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength) {
 	var svg = d3.select("svg");
+
+	// 3hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 5)
+		.attr("x1", 756)
+		.attr("y1", 135)
+		.attr("x2", 756)
+		.attr("y2", 420); 
+	
+	// 1hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 5)
+		.attr("x1", 1020)
+		.attr("y1", 590)
+		.attr("x2", 770)
+		.attr("y2", 446); 
+
+	// 2hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 5)
+		.attr("x1", 492)
+		.attr("y1", 590)
+		.attr("x2", 742)
+		.attr("y2", 448); 
+
     var width = window.innerWidth || document.body.clientWidth;  //svg.attr("width");
     width *= .9;
     var height = window.innerHeight || document.body.clientHeight; //svg.attr("height");
