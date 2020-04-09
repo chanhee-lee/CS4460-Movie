@@ -80,8 +80,10 @@ function createLegend(main) {
 */
 function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength) {
 	var svg = d3.select("svg");
-    var width = svg.attr("width");
-    var height = svg.attr("height");
+    var width = window.innerWidth || document.body.clientWidth;  //svg.attr("width");
+    width *= .9;
+    var height = window.innerHeight || document.body.clientHeight; //svg.attr("height");
+    height *= .9;
     var radius = Math.min(width, height) / 4;
     var g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
