@@ -43,7 +43,7 @@ export function radii(movieMap) {
         var color = ["#ff0000", "#ffa500", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#7f00ff"]
 
         // Setup Legend 
-        // createLegend(main);
+        createLegend(svg, movieArr, color);
 
 	  	// For Each Movie: Make circle 
 	  	var inner = SIZE;
@@ -64,11 +64,27 @@ export function radii(movieMap) {
     })	
 }
 
-function createLegend(main) {
-    main.append("input").attr("type", "checkbox").attr("id", "testing1");
-    main.append("label").text("Reservoir Dogs").attr("style","color: #ff0000");
-    main.append("input").attr("type", "checkbox").attr("id", "testing2");
-    main.append("label").text("Pulp Fiction").attr("style","color: #ffa500");
+function createLegend(svg, movieArr, colorArr) {
+    svg.selectAll("dots")
+      .data(movieArr)
+      .enter()
+      .append("circle")
+        .attr("cx", 1100)
+        .attr("cy", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
+        .attr("r", 7)
+        .style("fill", function(d, i){ return colorArr[i]})
+
+    // Add one dot in the legend for each name.
+    svg.selectAll("labels")
+      .data(movieArr)
+      .enter()
+      .append("text")
+        .attr("x", 1120)
+        .attr("y", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
+        .style("fill", function(d, i){ return colorArr[i]})
+        .text(function(d){ return d.title})
+        .attr("text-anchor", "left")
+        .style("alignment-baseline", "middle")
 }
 
 /**
@@ -98,7 +114,6 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
     var toolTip = d3.select('body').append('div')
     			.attr('class', 'tooltip-profanity')
     			.style('opacity', 0);
-
 
     //Generate groups
     var arcs = g.selectAll("arc")
