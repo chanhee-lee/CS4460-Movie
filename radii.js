@@ -44,6 +44,7 @@ export function radii(movieMap) {
         // Setup Colors for Movies
 		// var color = ["#A7CEE3", "#1F78B4", "#B3DF8A", "#34A02D", "#FB9B9A", "#E31B1B", "#FDC070"]
 		var color = ["#ff0000", "#FF8C00", "#CCCC00", "#32CD32", "#0000ff", "#9400D3", "#e75480"]
+        var colorRgb = ["255,0,0", "255,140,0", "204,204,0", "50,205,50", "0,0,255", "148,0,211", "231,84,128"]
 
         // Setup Legend 
         createLegend(svg, movieArr, color);
@@ -60,7 +61,7 @@ export function radii(movieMap) {
 			var data = movieIntervalData[i].intervalData;
 			var wordData = movieIntervalData[i].intervalWords;
 
-		    createArc(arcInterval, data, wordData, inner, outer, color[i], movieArr[i].duration);
+		    createArc(arcInterval, data, wordData, inner, outer, colorRgb[i], movieArr[i].duration);
 		    inner += SIZE * 2; 
 		    outer += SIZE * 2;
 	  	}
@@ -207,6 +208,7 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
 */
 function getColor(base, total, current) {
 	var c = d3.hsl(base);
-	c.s = current / total;
-	return c; 
+	var opacity = current / total;
+    c = "rgba("+base+","+opacity+")"
+    return c; 
 }
