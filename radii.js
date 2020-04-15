@@ -197,6 +197,9 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
         .attr("fill", function(d, i) {
         	return i < movieLength / MINUTE ? getColor(color, 18, data[i]) : "#000000"
         })
+        .attr("stroke", function(d, i) {
+            return i < movieLength / MINUTE ? getDarkerColor(color, 18, data[i]) : "black"
+        })
         .attr("d", arc);
 }
 
@@ -211,4 +214,11 @@ function getColor(base, total, current) {
 	var opacity = current / total;
     c = "rgba("+base+","+opacity+")"
     return c; 
+}
+
+function getDarkerColor(base, total, current) {
+    var color = getColor(base, total, current); 
+    color = d3.hsl(color);
+    color.l -= 0.35;
+    return color;
 }
