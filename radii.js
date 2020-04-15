@@ -3,7 +3,7 @@ var movieIntervalData = [];
 const MINUTE = 5; 
 const SIZE = 20; 
 
-//alert("DISCLAIMER: contains profanity that some may deem innapropriate or offensive");
+alert("DISCLAIMER: contains profanity that some may deem innapropriate or offensive");
 
 export function radii(movieMap) {
     // Select svg
@@ -48,6 +48,12 @@ export function radii(movieMap) {
         // Setup Legend 
 		createLegend(svg, movieArr, color);
 		
+		svg.append('text')
+			.attr('class', 'title')
+			.attr('transform','translate(500, 50)')
+			.text('Tarantino\'s Filthy Mouth')
+			.style('fill', 'white')
+			.style('font-size', 50);
 
 	  	// For Each Movie: Make circle 
 	  	var inner = SIZE;
