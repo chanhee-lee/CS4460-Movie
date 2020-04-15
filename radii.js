@@ -42,12 +42,12 @@ export function radii(movieMap) {
         console.log(movieIntervalData)
 
         // Setup Colors for Movies
-		// var color = ["#A7CEE3", "#1F78B4", "#B3DF8A", "#34A02D", "#FB9B9A", "#E31B1B", "#FDC070"]
 		var color = ["#ff0000", "#FF8C00", "#CCCC00", "#32CD32", "#0000ff", "#9400D3", "#e75480"]
         var colorRgb = ["255,0,0", "255,140,0", "204,204,0", "50,205,50", "0,0,255", "148,0,211", "231,84,128"]
 
         // Setup Legend 
-        createLegend(svg, movieArr, color);
+		createLegend(svg, movieArr, color);
+		
 
 	  	// For Each Movie: Make circle 
 	  	var inner = SIZE;
@@ -64,7 +64,10 @@ export function radii(movieMap) {
 		    createArc(arcInterval, data, wordData, inner, outer, colorRgb[i], movieArr[i].duration);
 		    inner += SIZE * 2; 
 		    outer += SIZE * 2;
-	  	}
+		  }
+		  
+		// Create axes
+		createAxes(svg);
 	})	
 
 }
@@ -102,33 +105,6 @@ function createLegend(svg, movieArr, colorArr) {
 */
 function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength) {
 	var svg = d3.select("svg");
-
-	// 3hr axis
-	svg.append('line')
-		.style("stroke", "white")
-		.style("stroke-width", 5)
-		.attr("x1", 756)
-		.attr("y1", 135)
-		.attr("x2", 756)
-		.attr("y2", 420); 
-	
-	// 1hr axis
-	svg.append('line')
-		.style("stroke", "white")
-		.style("stroke-width", 5)
-		.attr("x1", 1020)
-		.attr("y1", 590)
-		.attr("x2", 770)
-		.attr("y2", 446); 
-
-	// 2hr axis
-	svg.append('line')
-		.style("stroke", "white")
-		.style("stroke-width", 5)
-		.attr("x1", 492)
-		.attr("y1", 590)
-		.attr("x2", 742)
-		.attr("y2", 448); 
 
     var width = window.innerWidth || document.body.clientWidth;  //svg.attr("width");
     width *= .9;
@@ -221,4 +197,33 @@ function getDarkerColor(base, total, current) {
     color = d3.hsl(color);
     color.l -= 0.35;
     return color;
+}
+
+function createAxes(svg) {
+	// 3hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 3)
+		.attr("x1", 756)
+		.attr("y1", 132)
+		.attr("x2", 756)
+		.attr("y2", 420); 
+	
+	// 1hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 3)
+		.attr("x1", 1020)
+		.attr("y1", 590)
+		.attr("x2", 770)
+		.attr("y2", 446); 
+
+	// 2hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 3)
+		.attr("x1", 492)
+		.attr("y1", 590)
+		.attr("x2", 742)
+		.attr("y2", 446); 
 }

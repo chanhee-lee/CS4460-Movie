@@ -21,11 +21,11 @@ body {
 }
 
 .text {
-    fill: white;
+    fill: black;
 }
 
 .axis text {
-    fill: white;
+    fill: black;
 }
 
 .axis path,
@@ -45,3 +45,4 @@ div.tooltip-profanity {
      font-size: 0.5rem;
      font: 0.5rem Lucida Sans Unicode, sans-serif;
 }
+
