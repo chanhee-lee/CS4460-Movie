@@ -226,4 +226,23 @@ function createAxes(svg) {
 		.attr("y1", 590)
 		.attr("x2", 742)
 		.attr("y2", 446); 
+
+	// Create axes labels
+	svg.append('text')
+		.attr('class', 'label')
+		.attr('transform','translate(732, 120)')
+		.text('3 hours')
+		.style('fill', 'white');
+
+	svg.append('text')
+		.attr('class', 'label')
+		.attr('transform','translate(1010, 610)')
+		.text('1 hour')
+		.style('fill', 'white');
+
+	svg.append('text')
+		.attr('class', 'label')
+		.attr('transform','translate(462, 610)')
+		.text('2 hours')
+		.style('fill', 'white');
 }
