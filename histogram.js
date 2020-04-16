@@ -135,6 +135,11 @@ export function histogram(movieName) {
             .data(curMovie)
             .enter()
             .append('circle')
+            .attr('cx', 320)
+        	.attr('cy', 160)
+            .attr('r', '0px')
+            .transition()
+            .duration(1000)
             .attr('cx', function(d) {
                 return xScale(d.minutes)
             })
@@ -145,6 +150,7 @@ export function histogram(movieName) {
             .attr('fill', function(d) {
                 return (d.type == 'word') ? 'black' : 'red'
             });
+
             
         svg.selectAll("g.y.axis")
             .call(yAxis)
