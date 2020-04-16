@@ -100,9 +100,7 @@ function createLegend(svg, movieArr, colorArr) {
 		.style("fill", "white")
 		// Not working correctly, only lists one of the years
         .text(function(d, i){ 
-			for (i  = 0; i < years.length; i++) {
-				return d.title + ' (' + years[i] + ')';
-			}
+			return d.title + ' (' + years[i] + ')';
 		})
         .attr("text-anchor", "left")
 		.style("alignment-baseline", "middle")
