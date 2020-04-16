@@ -53,7 +53,7 @@ export function radii(movieMap) {
 			.attr('transform','translate(500, 50)')
 			.text('Tarantino\'s Filthy Mouth')
 			.style('fill', 'white')
-			.style('font-size', 50);
+			.style("font", "3.0rem Lucida Sans Unicode, sans-serif");
 
 	  	// For Each Movie: Make circle 
 	  	var inner = SIZE;
@@ -86,7 +86,9 @@ function createLegend(svg, movieArr, colorArr) {
         .attr("cx", 1100)
         .attr("cy", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
         .attr("r", 7)
-        .style("fill", function(d, i){ return colorArr[i]})
+		.style("fill", function(d, i){ return colorArr[i]})
+		
+	var years = ["1992", "1994", "1997", "2003", "2004", "2009", "2012"];
 
     // Add one dot in the legend for each name.
     svg.selectAll("labels")
@@ -95,10 +97,16 @@ function createLegend(svg, movieArr, colorArr) {
       .append("text")
         .attr("x", 1120)
         .attr("y", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
-        .style("fill", function(d, i){ return colorArr[i]})
-        .text(function(d){ return d.title})
+		.style("fill", "white")
+		// Not working correctly, only lists one of the years
+        .text(function(d, i){ 
+			for (i  = 0; i < years.length; i++) {
+				return d.title + ' (' + years[i] + ')';
+			}
+		})
         .attr("text-anchor", "left")
-        .style("alignment-baseline", "middle")
+		.style("alignment-baseline", "middle")
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif")
 }
 
 /**
@@ -238,17 +246,20 @@ function createAxes(svg) {
 		.attr('class', 'label')
 		.attr('transform','translate(732, 120)')
 		.text('3 hours')
-		.style('fill', 'white');
+		.style('fill', 'white')
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 
 	svg.append('text')
 		.attr('class', 'label')
 		.attr('transform','translate(1010, 610)')
 		.text('1 hour')
-		.style('fill', 'white');
+		.style('fill', 'white')
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 
 	svg.append('text')
 		.attr('class', 'label')
 		.attr('transform','translate(462, 610)')
 		.text('2 hours')
-		.style('fill', 'white');
+		.style('fill', 'white')
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 }
