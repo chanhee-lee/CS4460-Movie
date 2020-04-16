@@ -1,3 +1,4 @@
+// import {histogram} from  './histogram.js';
 var movieArr = [];
 var movieIntervalData = [];
 const MINUTE = 5; 
@@ -67,7 +68,7 @@ export function radii(movieMap) {
 			var data = movieIntervalData[i].intervalData;
 			var wordData = movieIntervalData[i].intervalWords;
 
-		    createArc(arcInterval, data, wordData, inner, outer, colorRgb[i], movieArr[i].duration);
+		    createArc(arcInterval, data, wordData, inner, outer, colorRgb[i], movieArr[i].duration, movieIntervalData[i].title);
 		    inner += SIZE * 2; 
 		    outer += SIZE * 2;
 		  }
@@ -115,7 +116,7 @@ function createLegend(svg, movieArr, colorArr) {
 * innerRadius: Inner radius size of arc
 * outerRadius: Outer radius size of arc
 */
-function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength) {
+function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength, movieName) {
 	var svg = d3.select("svg");
 
     var width = window.innerWidth || document.body.clientWidth;  //svg.attr("width");
@@ -178,6 +179,9 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
                 	toolTip.transition()
                 		.duration('50')
                 		.style('opacity', 0);
+                })
+                .on('click', function () {
+                	transitionHist(movieName);
                 });
 
     //Draw arc paths (separating intervals)
@@ -189,6 +193,11 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
             return i < movieLength / MINUTE ? getDarkerColor(color, 18, data[i]) : "black"
         })
         .attr("d", arc);
+}
+
+function transitionHist(movieName) {
+	sessionStorage.setItem("selectedMovie", movieName);
+	window.location.href = "histogram.html";
 }
 
 /**

@@ -1,4 +1,4 @@
-import {histogram} from  './histogram.js';
+// import {histogram} from  './histogram.js';
 import {radii} from './radii.js';
 var movieMap = new Map(); 
 var rd = { "title": "Reservoir Dogs", "duration": "100", "year": "1992", "profanity": "431" };

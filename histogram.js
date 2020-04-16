@@ -1,5 +1,7 @@
-export function histogram() {
+export function histogram(movieName) {
     // Select svg
+   	var selected = sessionStorage.getItem("selectedMovie");
+   	console.log(selected);
     var svg = d3.select('svg');
 
     // Load tarantino wordcount dataset
@@ -29,7 +31,7 @@ export function histogram() {
                 update();
             })
 
-        var selectedMovie = "Reservoir Dogs"
+        var selectedMovie = selected;
 
         update();
         
@@ -176,3 +178,4 @@ export function histogram() {
     })
 
 }
+histogram();
