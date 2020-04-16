@@ -48,9 +48,12 @@ export function radii(movieMap) {
         // Setup Legend 
 		createLegend(svg, movieArr, color);
 		
+		var svgWidth = parseInt(svg.style("width"));
+		var svgHeight = parseInt(svg.style("height"));
+
 		svg.append('text')
 			.attr('class', 'title')
-			.attr('transform','translate(500, 50)')
+			.attr('transform','translate('+ svgWidth / (1512 / 500) +', '+ svgHeight / ( 873 / 50) +')')
 			.text('Tarantino\'s Filthy Mouth')
 			.style('fill', 'white')
 			.style("font", "3.0rem Lucida Sans Unicode, sans-serif");
@@ -213,10 +216,7 @@ function getDarkerColor(base, total, current) {
 function createAxes(svg) {
 
 	var svgWidth = parseInt(svg.style("width"));
-	console.log("width: " + svgWidth);
-
 	var svgHeight = parseInt(svg.style("height"));
-	console.log("height: " + svgHeight);
 
 	// 3hr axis
 	svg.append('line')
@@ -249,21 +249,21 @@ function createAxes(svg) {
 	// width: 1512, height: 873
 	svg.append('text')
 		.attr('class', 'label')
-		.attr('transform','translate(732, 120)')
+		.attr('transform','translate('+ svgWidth / (1512 / 732) +', '+ svgHeight / ( 873 / 120) +')') // 732, 120
 		.text('3 hours')
 		.style('fill', 'white')
 		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 
 	svg.append('text')
 		.attr('class', 'label')
-		.attr('transform','translate(1010, 610)')
+		.attr('transform','translate('+ svgWidth / (1512 / 1010) +', '+ svgHeight / ( 873 / 610) +')') // 1010, 610
 		.text('1 hour')
 		.style('fill', 'white')
 		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 
 	svg.append('text')
 		.attr('class', 'label')
-		.attr('transform','translate(462, 610)')
+		.attr('transform','translate('+ svgWidth / (1512 / 462) +', '+ svgHeight / ( 873 / 610) +')') // 462, 610
 		.text('2 hours')
 		.style('fill', 'white')
 		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
