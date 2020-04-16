@@ -3,7 +3,7 @@ var movieIntervalData = [];
 const MINUTE = 5; 
 const SIZE = 20; 
 
-alert("DISCLAIMER: contains profanity that some may deem innapropriate or offensive");
+//alert("DISCLAIMER: contains profanity that some may deem innapropriate or offensive");
 
 export function radii(movieMap) {
     // Select svg
@@ -98,7 +98,6 @@ function createLegend(svg, movieArr, colorArr) {
         .attr("x", 1120)
         .attr("y", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
 		.style("fill", "white")
-		// Not working correctly, only lists one of the years
         .text(function(d, i){ 
 			return d.title + ' (' + years[i] + ')';
 		})
@@ -212,34 +211,42 @@ function getDarkerColor(base, total, current) {
 }
 
 function createAxes(svg) {
+
+	var svgWidth = parseInt(svg.style("width"));
+	console.log("width: " + svgWidth);
+
+	var svgHeight = parseInt(svg.style("height"));
+	console.log("height: " + svgHeight);
+
 	// 3hr axis
 	svg.append('line')
 		.style("stroke", "white")
 		.style("stroke-width", 3)
-		.attr("x1", 756)
-		.attr("y1", 132)
-		.attr("x2", 756)
-		.attr("y2", 420); 
+		.attr("x1", svgWidth / 2) //756
+		.attr("y1", svgHeight / (873 / 132)) //132
+		.attr("x2", svgWidth / 2) //756
+		.attr("y2", svgHeight / (873 / 420)); //420
 	
 	// 1hr axis
 	svg.append('line')
 		.style("stroke", "white")
 		.style("stroke-width", 3)
-		.attr("x1", 1020)
-		.attr("y1", 590)
-		.attr("x2", 770)
-		.attr("y2", 446); 
+		.attr("x1", svgWidth / (1512 / 1020)) //1020
+		.attr("y1", svgHeight / (873 / 590)) //590
+		.attr("x2", svgWidth / (1512 / 770)) //770
+		.attr("y2", svgHeight / (873 / 446)); //446
 
 	// 2hr axis
 	svg.append('line')
 		.style("stroke", "white")
 		.style("stroke-width", 3)
-		.attr("x1", 492)
-		.attr("y1", 590)
-		.attr("x2", 742)
-		.attr("y2", 446); 
+		.attr("x1", svgWidth / (1512 / 492)) // 492
+		.attr("y1", svgHeight / (873 / 590)) // 590
+		.attr("x2", svgWidth / (1512 / 742)) // 742
+		.attr("y2", svgHeight / (873 / 446));  // 446
 
 	// Create axes labels
+	// width: 1512, height: 873
 	svg.append('text')
 		.attr('class', 'label')
 		.attr('transform','translate(732, 120)')
