@@ -22,6 +22,7 @@ body {
 
 .text {
     fill: white;
+    stroke: white;
 }
 
 .axis text {
@@ -30,7 +31,7 @@ body {
 
 .axis path,
 .axis line {
-    stroke: black;
+    stroke: white;
 }
 
 div.tooltip-profanity {
