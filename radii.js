@@ -131,7 +131,7 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
     var arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
 
     // Make tooltip
-    var toolTip = d3.select('body').append('div')
+    var  = d3.select('body').append('div')
     			.attr('class', 'tooltip-profanity')
     			.style('opacity', 0);
     //Generate groups
@@ -158,7 +158,7 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
 		                		return wordData[i][a] === highestVal;
 		                	})
 		                	if (mostUsed === '') {
-		                		mostUsed = 'Death';
+		                		mostUsed = 'death';
 		                	} else if (typeof mostUsed === 'undefined') {
 		                		mostUsed = 'N/A';
 		                	}

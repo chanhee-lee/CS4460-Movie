@@ -2,6 +2,7 @@ export function histogram(movieName) {
     // Select svg
    	var selected = sessionStorage.getItem("selectedMovie");
    	var interval = parseInt(sessionStorage.getItem("selectedInterval"));
+   	var intervalStart = interval - 5;
     var svg = d3.select('svg');
 
     // Load tarantino wordcount dataset
@@ -130,7 +131,11 @@ export function histogram(movieName) {
             .text('Vulgarity Count')
             .attr('font-family', 'Arial')
             .attr('font-size', '12');
-    
+
+    	var toolTip = d3.select('body').append('div')
+    			.attr('class', 'tooltip-profanity')
+    			.style('opacity', 0);
+
         var circle = svg.selectAll('circle')
             .data(curMovie)
             .enter()
@@ -138,6 +143,42 @@ export function histogram(movieName) {
             .attr('cx', 320)
         	.attr('cy', 160)
             .attr('r', '0px')
+            .on('mouseover', function(d) {
+            	if (d.minutes >= intervalStart && d.minutes < interval) {
+            		d3.select(this).transition()
+                		.duration('50')
+                		.style('opacity', 0.5);
+            	} else {
+            		d3.select(this).transition()
+                		.duration('50')
+                		.style('opacity', 1);
+            	}
+            	if (d.type == 'death') {
+            		var content = 'death';
+            	} else {
+            		var content = d.word;
+            	}
+	            toolTip.html(content)
+	                		.style('left', (d3.event.pageX + 10) + 'px')
+	                		.style('top', (d3.event.pageY - 15) + 'px');
+            	toolTip.transition()
+	                		.duration('50')
+	                		.style('opacity', 1);
+            })
+            .on('mouseout', function(d) {
+           		if (d.minutes >= intervalStart && d.minutes < interval) {
+           			d3.select(this).transition()
+                		.duration('50')
+                		.style('opacity', 1);
+           		} else {
+           			d3.select(this).transition()
+                		.duration('50')
+                		.style('opacity', 0.1);
+           		}
+            	toolTip.transition()
+	                		.duration('50')
+	                		.style('opacity', 0);
+            })
             .transition()
             .duration(1000)
             .attr('cx', function(d) {
@@ -151,7 +192,6 @@ export function histogram(movieName) {
                 return (d.type == 'word') ? 'black' : 'red'
             })
             .style('opacity', function(d) {
-            	var intervalStart = interval - 5;
             	if (d.minutes >= intervalStart && d.minutes < interval) {
             		console.log(d.minutes);
             		return 1;
@@ -228,14 +268,62 @@ export function histogram(movieName) {
 
             var circle = svg.selectAll('circle')
                 .data(curMovie)
-                .style('opacity', 1);
+                .style('opacity', 1)
+                .on('mouseover', function(d) {
+            		d3.select(this).transition()
+                		.duration('50')
+                		.style('opacity', 0.5);
+	            	if (d.type == 'death') {
+	            		var content = 'death';
+	            	} else {
+	            		var content = d.word;
+	            	}
+		            toolTip.html(content)
+		                		.style('left', (d3.event.pageX + 10) + 'px')
+		                		.style('top', (d3.event.pageY - 15) + 'px');
+	            	toolTip.transition()
+		                		.duration('50')
+		                		.style('opacity', 1);
+		        })
+	            .on('mouseout', function(d) {
+           			d3.select(this).transition()
+                		.duration('50')
+                		.style('opacity', 1);
+	            	toolTip.transition()
+		                		.duration('50')
+		                		.style('opacity', 0);
+	            });
 
             circle.exit().remove();
 
             var enter = circle.enter().append('circle')
             	.attr('cx', 320)
             	.attr('cy', 160)
-                .attr('r', '0px');
+                .attr('r', '0px')
+                .on('mouseover', function(d) {
+            		d3.select(this).transition()
+                		.duration('50')
+                		.style('opacity', 0.5);
+	            	if (d.type == 'death') {
+	            		var content = 'death';
+	            	} else {
+	            		var content = d.word;
+	            	}
+		            toolTip.html(content)
+		                		.style('left', (d3.event.pageX + 10) + 'px')
+		                		.style('top', (d3.event.pageY - 15) + 'px');
+	            	toolTip.transition()
+		                		.duration('50')
+		                		.style('opacity', 1);
+		        })
+	            .on('mouseout', function(d) {
+           			d3.select(this).transition()
+                		.duration('50')
+                		.style('opacity', 1);
+	            	toolTip.transition()
+		                		.duration('50')
+		                		.style('opacity', 0);
+	            });
 
             circle = circle.merge(enter);
 
