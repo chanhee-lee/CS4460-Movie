@@ -42,12 +42,21 @@ export function radii(movieMap) {
         console.log(movieIntervalData)
 
         // Setup Colors for Movies
-		// var color = ["#A7CEE3", "#1F78B4", "#B3DF8A", "#34A02D", "#FB9B9A", "#E31B1B", "#FDC070"]
 		var color = ["#ff0000", "#FF8C00", "#CCCC00", "#32CD32", "#0000ff", "#9400D3", "#e75480"]
         var colorRgb = ["255,0,0", "255,140,0", "204,204,0", "50,205,50", "0,0,255", "148,0,211", "231,84,128"]
 
         // Setup Legend 
-        createLegend(svg, movieArr, color);
+		createLegend(svg, movieArr, color);
+		
+		var svgWidth = parseInt(svg.style("width"));
+		var svgHeight = parseInt(svg.style("height"));
+
+		svg.append('text')
+			.attr('class', 'title')
+			.attr('transform','translate('+ svgWidth / (1512 / 500) +', '+ svgHeight / ( 873 / 50) +')')
+			.text('Tarantino\'s Filthy Mouth')
+			.style('fill', 'white')
+			.style("font", "3.0rem Lucida Sans Unicode, sans-serif");
 
 	  	// For Each Movie: Make circle 
 	  	var inner = SIZE;
@@ -64,7 +73,10 @@ export function radii(movieMap) {
 		    createArc(arcInterval, data, wordData, inner, outer, colorRgb[i], movieArr[i].duration);
 		    inner += SIZE * 2; 
 		    outer += SIZE * 2;
-	  	}
+		  }
+		  
+		// Create axes
+		createAxes(svg);
 	})	
 
 }
@@ -77,7 +89,9 @@ function createLegend(svg, movieArr, colorArr) {
         .attr("cx", 1100)
         .attr("cy", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
         .attr("r", 7)
-        .style("fill", function(d, i){ return colorArr[i]})
+		.style("fill", function(d, i){ return colorArr[i]})
+		
+	var years = ["1992", "1994", "1997", "2003", "2004", "2009", "2012"];
 
     // Add one dot in the legend for each name.
     svg.selectAll("labels")
@@ -86,10 +100,13 @@ function createLegend(svg, movieArr, colorArr) {
       .append("text")
         .attr("x", 1120)
         .attr("y", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
-        .style("fill", function(d, i){ return colorArr[i]})
-        .text(function(d){ return d.title})
+		.style("fill", "white")
+        .text(function(d, i){ 
+			return d.title + ' (' + years[i] + ')';
+		})
         .attr("text-anchor", "left")
-        .style("alignment-baseline", "middle")
+		.style("alignment-baseline", "middle")
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif")
 }
 
 /**
@@ -102,33 +119,6 @@ function createLegend(svg, movieArr, colorArr) {
 */
 function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength) {
 	var svg = d3.select("svg");
-
-	// 3hr axis
-	svg.append('line')
-		.style("stroke", "white")
-		.style("stroke-width", 5)
-		.attr("x1", 756)
-		.attr("y1", 135)
-		.attr("x2", 756)
-		.attr("y2", 420); 
-	
-	// 1hr axis
-	svg.append('line')
-		.style("stroke", "white")
-		.style("stroke-width", 5)
-		.attr("x1", 1020)
-		.attr("y1", 590)
-		.attr("x2", 770)
-		.attr("y2", 446); 
-
-	// 2hr axis
-	svg.append('line')
-		.style("stroke", "white")
-		.style("stroke-width", 5)
-		.attr("x1", 492)
-		.attr("y1", 590)
-		.attr("x2", 742)
-		.attr("y2", 448); 
 
     var width = window.innerWidth || document.body.clientWidth;  //svg.attr("width");
     width *= .9;
@@ -197,6 +187,9 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
         .attr("fill", function(d, i) {
         	return i < movieLength / MINUTE ? getColor(color, 18, data[i]) : "#000000"
         })
+        .attr("stroke", function(d, i) {
+            return i < movieLength / MINUTE ? getDarkerColor(color, 18, data[i]) : "black"
+        })
         .attr("d", arc);
 }
 
@@ -211,4 +204,67 @@ function getColor(base, total, current) {
 	var opacity = current / total;
     c = "rgba("+base+","+opacity+")"
     return c; 
+}
+
+function getDarkerColor(base, total, current) {
+    var color = getColor(base, total, current); 
+    color = d3.hsl(color);
+    color.l -= 0.35;
+    return color;
+}
+
+function createAxes(svg) {
+
+	var svgWidth = parseInt(svg.style("width"));
+	var svgHeight = parseInt(svg.style("height"));
+
+	// 3hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 3)
+		.attr("x1", svgWidth / 2) //756
+		.attr("y1", svgHeight / (873 / 132)) //132
+		.attr("x2", svgWidth / 2) //756
+		.attr("y2", svgHeight / (873 / 420)); //420
+	
+	// 1hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 3)
+		.attr("x1", svgWidth / (1512 / 1020)) //1020
+		.attr("y1", svgHeight / (873 / 590)) //590
+		.attr("x2", svgWidth / (1512 / 770)) //770
+		.attr("y2", svgHeight / (873 / 446)); //446
+
+	// 2hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 3)
+		.attr("x1", svgWidth / (1512 / 492)) // 492
+		.attr("y1", svgHeight / (873 / 590)) // 590
+		.attr("x2", svgWidth / (1512 / 742)) // 742
+		.attr("y2", svgHeight / (873 / 446));  // 446
+
+	// Create axes labels
+	// width: 1512, height: 873
+	svg.append('text')
+		.attr('class', 'label')
+		.attr('transform','translate('+ svgWidth / (1512 / 732) +', '+ svgHeight / ( 873 / 120) +')') // 732, 120
+		.text('3 hours')
+		.style('fill', 'white')
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
+
+	svg.append('text')
+		.attr('class', 'label')
+		.attr('transform','translate('+ svgWidth / (1512 / 1010) +', '+ svgHeight / ( 873 / 610) +')') // 1010, 610
+		.text('1 hour')
+		.style('fill', 'white')
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
+
+	svg.append('text')
+		.attr('class', 'label')
+		.attr('transform','translate('+ svgWidth / (1512 / 462) +', '+ svgHeight / ( 873 / 610) +')') // 462, 610
+		.text('2 hours')
+		.style('fill', 'white')
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 }
