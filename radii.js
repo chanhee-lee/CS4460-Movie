@@ -1,3 +1,4 @@
+// import {histogram} from  './histogram.js';
 var movieArr = [];
 var movieIntervalData = [];
 const MINUTE = 5; 
@@ -70,7 +71,7 @@ export function radii(movieMap) {
 			var data = movieIntervalData[i].intervalData;
 			var wordData = movieIntervalData[i].intervalWords;
 
-		    createArc(arcInterval, data, wordData, inner, outer, colorRgb[i], movieArr[i].duration);
+		    createArc(arcInterval, data, wordData, inner, outer, colorRgb[i], movieArr[i].duration, movieIntervalData[i].title);
 		    inner += SIZE * 2; 
 		    outer += SIZE * 2;
 		  }
@@ -117,16 +118,14 @@ function createLegend(svg, movieArr, colorArr) {
 * innerRadius: Inner radius size of arc
 * outerRadius: Outer radius size of arc
 */
-function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength) {
+function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength, movieName) {
 	var svg = d3.select("svg");
-
     var width = window.innerWidth || document.body.clientWidth;  //svg.attr("width");
     width *= .9;
     var height = window.innerHeight || document.body.clientHeight; //svg.attr("height");
     height *= .9;
     var radius = Math.min(width, height) / 4;
     var g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
     // Generate the pie
     var pie = d3.pie();
 
@@ -137,7 +136,6 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
     var toolTip = d3.select('body').append('div')
     			.attr('class', 'tooltip-profanity')
     			.style('opacity', 0);
-
     //Generate groups
     var arcs = g.selectAll("arc")
                 .data(pie(arcInterval))
@@ -147,14 +145,14 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
                 .on('mouseover', function (d, i) {
                 	d3.select(this).transition()
                 		.duration('50')
-                		.attr('opacity', '0.85');
+                		.attr('opacity', '0.5');
                 	if (i >= movieLength / MINUTE) {
                 		toolTip.transition()
 	                		.duration('50')
 	                		.style('opacity', 0);
                 	} else {	
 	                	toolTip.transition()
-	                		.duration('50')
+	                		.duration('800')
 	                		.style('opacity', 1);
 	                	if (Object.keys(wordData[i].length !== 0)) {
                 			var highestVal = Math.max.apply(null, Object.values(wordData[i]))
@@ -162,7 +160,7 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
 		                		return wordData[i][a] === highestVal;
 		                	})
 		                	if (mostUsed === '') {
-		                		mostUsed = 'Death';
+		                		mostUsed = 'death';
 		                	} else if (typeof mostUsed === 'undefined') {
 		                		mostUsed = 'N/A';
 		                	}
@@ -180,6 +178,10 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
                 	toolTip.transition()
                 		.duration('50')
                 		.style('opacity', 0);
+                })
+                .on('click', function (d, i) {
+                	var interval = i * MINUTE;
+                	transitionHist(movieName, interval);
                 });
 
     //Draw arc paths (separating intervals)
@@ -191,6 +193,12 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
             return i < movieLength / MINUTE ? getDarkerColor(color, 18, data[i]) : "black"
         })
         .attr("d", arc);
+}
+
+function transitionHist(movieName, interval) {
+	sessionStorage.setItem("selectedMovie", movieName);
+	sessionStorage.setItem("selectedInterval", interval)
+	window.location.href = "histogram.html";
 }
 
 /**
