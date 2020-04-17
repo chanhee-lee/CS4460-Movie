@@ -60,8 +60,8 @@ export function histogram(movieName) {
     
         var xScale = d3.scaleLinear()
             .domain(xDomain)
-            .range([100,500]);
-    
+            .range([svgWidth / 4, svgWidth * .75]);
+
         var yDomain = d3.extent(curMovie, function(d) {
             return +d.occurNum
         })
@@ -70,7 +70,7 @@ export function histogram(movieName) {
     
         var yScale = d3.scaleLinear()
             .domain(yDomain)
-            .range([250, 100]);
+            .range([svgHeight * (2 / 3), svgHeight * (1 / 3)]);
     
         var xAxis = d3.axisBottom(xScale)
     
@@ -247,25 +247,27 @@ export function histogram(movieName) {
                 curMovie[i].occurNum = count
                 prevMinutes = curMinutes
             }
-        
+            
             var xDomain = d3.extent(curMovie, function(d) {
-                return +d.minutes
+            return +d.minutes
             })
-        
+
             var xScale = d3.scaleLinear()
                 .domain(xDomain)
                 .range([svgWidth / 4, svgWidth * .75]);
-        
+
             var yDomain = d3.extent(curMovie, function(d) {
                 return +d.occurNum
             })
-        
+
+            console.log(yDomain)
+
             var yScale = d3.scaleLinear()
                 .domain(yDomain)
                 .range([svgHeight * (2 / 3), svgHeight * (1 / 3)]);
-        
+
             var xAxis = d3.axisBottom(xScale)
-        
+
             var yAxis = d3.axisLeft(yScale)
         
             svg.selectAll("g.y.axis")

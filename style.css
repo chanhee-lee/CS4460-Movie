@@ -1,13 +1,9 @@
-.radii {
+.radii, .histogram {
     font-family: "Open Sans";
     margin: 0;
     background-color: rgb(0,0,0);
 }
-.histogram {
-    font-family: "Open Sans";
-    margin: 0;
-    background-color: rgb(255,255,255);
-}
+
 html, 
 body {
     height: 100%;
@@ -25,11 +21,12 @@ body {
 }
 
 .text {
-    fill: black;
+    fill: white;
+    stroke: white;
 }
 
 .axis text {
-    fill: black;
+    fill: white;
 }
 
 .axis path,
@@ -40,13 +37,13 @@ body {
 div.tooltip-profanity {
      position: absolute;
      text-align: center;
-     padding: .5rem;
+     padding: 1rem;
      background: #FFFFFF;
      color: #313639;
      border: 1px solid #313639;
      border-radius: 8px;
      pointer-events: none;
-     font-size: 0.5rem;
-     font: 0.5rem Lucida Sans Unicode, sans-serif;
+     font-size: 1rem;
+     font: 1rem Lucida Sans Unicode, sans-serif;
 }
 

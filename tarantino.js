@@ -15,5 +15,4 @@ movieMap.set("Kill Bill: Vol. 1", kb1)
 movieMap.set("Kill Bill: Vol. 2", kb2)
 movieMap.set("Inglorious Basterds", ib)
 movieMap.set("Django Unchained", du)
-// radii(movieMap);
-histogram();
+radii(movieMap);
