@@ -2,7 +2,7 @@ export function histogram(movieName) {
     // Select svg
    	var selected = sessionStorage.getItem("selectedMovie");
    	var interval = parseInt(sessionStorage.getItem("selectedInterval"));
-   	var intervalStart = interval - 5;
+   	var intervalEnd = interval + 5;
     var svg = d3.select('svg');
     var svgWidth = parseInt(svg.style("width"))
     console.log(svgWidth)
@@ -158,7 +158,7 @@ export function histogram(movieName) {
         	.attr('cy', 160)
             .attr('r', '0px')
             .on('mouseover', function(d) {
-            	if (d.minutes >= intervalStart && d.minutes < interval) {
+            	if (d.minutes < intervalEnd && d.minutes >= interval) {
             		d3.select(this).transition()
                 		.duration('50')
                 		.style('opacity', 0.5);
@@ -180,7 +180,7 @@ export function histogram(movieName) {
 	                		.style('opacity', 1);
             })
             .on('mouseout', function(d) {
-           		if (d.minutes >= intervalStart && d.minutes < interval) {
+           		if (d.minutes < intervalEnd && d.minutes >= interval) {
            			d3.select(this).transition()
                 		.duration('50')
                 		.style('opacity', 1);
@@ -206,7 +206,7 @@ export function histogram(movieName) {
                 return (d.type == 'word') ? 'white' : 'red'
             })
             .style('opacity', function(d) {
-            	if (d.minutes >= intervalStart && d.minutes < interval) {
+            	if (d.minutes < intervalEnd && d.minutes >= interval) {
             		console.log(d.minutes);
             		return 1;
             	} else {
