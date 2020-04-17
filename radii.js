@@ -131,7 +131,7 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
     var arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
 
     // Make tooltip
-    var  = d3.select('body').append('div')
+    var toolTip = d3.select('body').append('div')
     			.attr('class', 'tooltip-profanity')
     			.style('opacity', 0);
     //Generate groups
@@ -150,7 +150,7 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
 	                		.style('opacity', 0);
                 	} else {	
 	                	toolTip.transition()
-	                		.duration('50')
+	                		.duration('800')
 	                		.style('opacity', 1);
 	                	if (Object.keys(wordData[i].length !== 0)) {
                 			var highestVal = Math.max.apply(null, Object.values(wordData[i]))
