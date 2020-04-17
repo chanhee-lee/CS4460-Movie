@@ -1,7 +1,7 @@
 export function histogram(movieName) {
     // Select svg
    	var selected = sessionStorage.getItem("selectedMovie");
-   	console.log(selected);
+   	var interval = parseInt(sessionStorage.getItem("selectedInterval"));
     var svg = d3.select('svg');
 
     // Load tarantino wordcount dataset
@@ -28,8 +28,8 @@ export function histogram(movieName) {
         var selectedMovie = selected;
         var curMovie = dataset.filter(function(element) {
             return element.movie == selectedMovie
-        })
-    
+        });
+
         var curMinutes = -1;
         var prevMinutes = -1;
         var count = 1;
@@ -149,6 +149,15 @@ export function histogram(movieName) {
             .attr('r', '3px')
             .attr('fill', function(d) {
                 return (d.type == 'word') ? 'black' : 'red'
+            })
+            .style('opacity', function(d) {
+            	var intervalStart = interval - 5;
+            	if (d.minutes >= intervalStart && d.minutes < interval) {
+            		console.log(d.minutes);
+            		return 1;
+            	} else {
+            		return 0.1;
+            	}
             });
 
             
@@ -218,7 +227,8 @@ export function histogram(movieName) {
                 .call(xAxis);
 
             var circle = svg.selectAll('circle')
-                .data(curMovie);
+                .data(curMovie)
+                .style('opacity', 1);
 
             circle.exit().remove();
 

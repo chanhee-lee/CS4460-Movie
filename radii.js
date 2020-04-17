@@ -118,14 +118,12 @@ function createLegend(svg, movieArr, colorArr) {
 */
 function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color, movieLength, movieName) {
 	var svg = d3.select("svg");
-
     var width = window.innerWidth || document.body.clientWidth;  //svg.attr("width");
     width *= .9;
     var height = window.innerHeight || document.body.clientHeight; //svg.attr("height");
     height *= .9;
     var radius = Math.min(width, height) / 4;
     var g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
     // Generate the pie
     var pie = d3.pie();
 
@@ -136,7 +134,6 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
     var toolTip = d3.select('body').append('div')
     			.attr('class', 'tooltip-profanity')
     			.style('opacity', 0);
-
     //Generate groups
     var arcs = g.selectAll("arc")
                 .data(pie(arcInterval))
@@ -146,7 +143,7 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
                 .on('mouseover', function (d, i) {
                 	d3.select(this).transition()
                 		.duration('50')
-                		.attr('opacity', '0.85');
+                		.attr('opacity', '0.5');
                 	if (i >= movieLength / MINUTE) {
                 		toolTip.transition()
 	                		.duration('50')
@@ -180,8 +177,9 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
                 		.duration('50')
                 		.style('opacity', 0);
                 })
-                .on('click', function () {
-                	transitionHist(movieName);
+                .on('click', function (d, i) {
+                	var interval = i * MINUTE;
+                	transitionHist(movieName, interval);
                 });
 
     //Draw arc paths (separating intervals)
@@ -195,8 +193,9 @@ function createArc(arcInterval, data, wordData, innerRadius, outerRadius, color,
         .attr("d", arc);
 }
 
-function transitionHist(movieName) {
+function transitionHist(movieName, interval) {
 	sessionStorage.setItem("selectedMovie", movieName);
+	sessionStorage.setItem("selectedInterval", interval)
 	window.location.href = "histogram.html";
 }
 
