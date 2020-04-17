@@ -217,7 +217,7 @@ function getColor(base, total, current) {
 function getDarkerColor(base, total, current) {
     var color = "rgba("+base+",1)"; 
     color = d3.hsl(color);
-    color.l = 0.2;
+    color.l = 0.1;
     color.s = 0.8;
     return color;
 }
