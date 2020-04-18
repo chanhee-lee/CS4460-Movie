@@ -47,3 +47,29 @@ div.tooltip-profanity {
      font: 1rem Lucida Sans Unicode, sans-serif;
 }
 
+#backButton {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  font: 1rem Lucida Sans Unicode, sans-serif;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #a92323;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+#backButton:hover {
+  background-color: #6d1414;
+}
+
+#backButton:active {
+  background-color: #6d1414;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+

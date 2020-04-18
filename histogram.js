@@ -2,11 +2,18 @@ export function histogram(movieName) {
     // Select svg
    	var selected = sessionStorage.getItem("selectedMovie");
    	var interval = parseInt(sessionStorage.getItem("selectedInterval"));
-   	var intervalStart = interval - 5;
+   	var intervalEnd = interval + 5;
+
+
     var svg = d3.select('svg');
-    var svgWidth = parseInt(svg.style("width"))
+    var div = d3.select('div');
+    
+    var svgWidth = parseInt(svg.style("width"));
+    var svgHeight = parseInt(svg.style("height"));
+    var divWidth = parseInt(div.style("width"));
+    var divHeight = parseInt(div.style("height"));
+
     console.log(svgWidth)
-    var svgHeight = parseInt(svg.style("height"))
     console.log(svgHeight)
 
     // Load tarantino wordcount dataset
@@ -15,7 +22,16 @@ export function histogram(movieName) {
         var movieTitles = [...new Set(dataset.map(item => item.movie))];
         var titleObjArr = []
         movieTitles.forEach(element => titleObjArr.push({title: element}))
-        console.log(titleObjArr)
+        console.log(titleObjArr);
+
+        var backButton = d3.select('button')
+            .style('position', 'absolute')
+            .style('left', '' + (divWidth / 6) + 'px')
+            .style('top', '' + (divHeight / 6) + 'px')
+            .on('click', function() {
+                window.location.href = 'index.html';
+            })
+            .text('Back');
 
         var selector = d3.select('body')
             .append("select")
@@ -158,7 +174,7 @@ export function histogram(movieName) {
         	.attr('cy', 160)
             .attr('r', '0px')
             .on('mouseover', function(d) {
-            	if (d.minutes >= intervalStart && d.minutes < interval) {
+            	if (d.minutes < intervalEnd && d.minutes >= interval) {
             		d3.select(this).transition()
                 		.duration('50')
                 		.style('opacity', 0.5);
@@ -180,7 +196,7 @@ export function histogram(movieName) {
 	                		.style('opacity', 1);
             })
             .on('mouseout', function(d) {
-           		if (d.minutes >= intervalStart && d.minutes < interval) {
+           		if (d.minutes < intervalEnd && d.minutes >= interval) {
            			d3.select(this).transition()
                 		.duration('50')
                 		.style('opacity', 1);
@@ -206,7 +222,7 @@ export function histogram(movieName) {
                 return (d.type == 'word') ? 'white' : 'red'
             })
             .style('opacity', function(d) {
-            	if (d.minutes >= intervalStart && d.minutes < interval) {
+            	if (d.minutes < intervalEnd && d.minutes >= interval) {
             		console.log(d.minutes);
             		return 1;
             	} else {
