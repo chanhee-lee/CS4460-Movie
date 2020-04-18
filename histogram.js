@@ -33,9 +33,10 @@ export function histogram(movieName) {
             })
             .text('Back');
 
-        var selector = d3.select('body')
-            .append("select")
-            .attr("id", "filmselector")
+        var selector = d3.select('select')
+            .style('position', 'absolute')
+            .style('left', '' + (divWidth * (3/4))+ 'px')
+            .style('top', '' + (divHeight / 6) + '200px')
             .selectAll("option")
             .data(titleObjArr)
             .enter().append("option")
@@ -104,21 +105,21 @@ export function histogram(movieName) {
 
         svg.append("rect")
             .attr("x", (svgWidth * (7/8)) - 20)
-            .attr("y", (svgHeight / 8) - 7)
+            .attr("y", (svgHeight / 2) - 7)
             .attr("width", 7)
             .attr("height", 7)
             .style("fill", "white")
         
         svg.append("rect")
             .attr("x", (svgWidth * (7/8)) - 20)
-            .attr("y", (svgHeight / 8) + 13)
+            .attr("y", (svgHeight / 2) + 13)
             .attr("width", 7)
             .attr("height", 7)
             .style("fill", "red")
 
         svg.append('text')
             .attr('class', 'legend')
-            .attr('transform', 'translate(' + (svgWidth * (7/8)) + ',' + (svgHeight / 8) + ')')
+            .attr('transform', 'translate(' + (svgWidth * (7/8)) + ',' + (svgHeight / 2) + ')')
             .text('Word')
             .attr('font-family', 'Arial')
             .attr('font-size', '12')
@@ -126,7 +127,7 @@ export function histogram(movieName) {
 
         svg.append('text')
             .attr('class', 'legend')
-            .attr('transform', 'translate(' + (svgWidth * (7/8)) + ',' + ((svgHeight / 8) + 20) + ')')
+            .attr('transform', 'translate(' + (svgWidth * (7/8)) + ',' + ((svgHeight / 2) + 20) + ')')
             .text('Death')
             .attr('font-family', 'Arial')
             .attr('font-size', '12')
@@ -237,7 +238,7 @@ export function histogram(movieName) {
         svg.selectAll("g.x.axis")
             .call(xAxis);
 
-        d3.select("#filmselector")
+        d3.select("#dropdown")
             .on("change", function(d) {
                 selectedMovie = this.value;
                 update();
