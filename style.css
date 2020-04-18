@@ -27,6 +27,7 @@ body {
 
 .axis text {
     fill: white;
+    font: 0.8rem Lucida Sans Unicode, sans-serif;
 }
 
 .axis path,
