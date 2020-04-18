@@ -96,11 +96,20 @@ export function histogram(movieName) {
             .attr('class', 'x axis')
             .attr('transform', 'translate(0, ' + (svgHeight * (2 / 3) + 10) + ')')
             .call(xAxis)
+            .style('opacity', 0)
+            .transition()
+            .duration(2200)
+            .style('opacity', 1);
+
         
         svg.append('g')
             .attr('class', 'y axis')
             .attr('transform', 'translate(' + (svgWidth / 4 - 10) + ', 0)')
             .call(yAxis)
+            .style('opacity', 0)
+            .transition()
+            .duration(2200)
+            .style('opacity', 1);
 
         svg.append("rect")
             .attr("x", (svgWidth * (7/8)) - 20)
@@ -108,6 +117,10 @@ export function histogram(movieName) {
             .attr("width", 7)
             .attr("height", 7)
             .style("fill", "white")
+            .style('opacity', 0)
+            .transition()
+            .duration(2200)
+            .style('opacity', 1);
         
         svg.append("rect")
             .attr("x", (svgWidth * (7/8)) - 20)
@@ -115,52 +128,76 @@ export function histogram(movieName) {
             .attr("width", 7)
             .attr("height", 7)
             .style("fill", "red")
+            .style('opacity', 0)
+            .transition()
+            .duration(2200)
+            .style('opacity', 1);
 
         svg.append('text')
             .attr('class', 'legend')
             .attr('transform', 'translate(' + (svgWidth * (7/8)) + ',' + (svgHeight / 8) + ')')
             .text('Word')
-            .attr('font-family', 'Arial')
+            .attr('font-family', 'Lucida Sans Unicode')
             .attr('font-size', '12')
-            .style("fill", "white");
+            .style("fill", "white")
+            .style('opacity', 0)
+            .transition()
+            .duration(2200)
+            .style('opacity', 1);
 
         svg.append('text')
             .attr('class', 'legend')
             .attr('transform', 'translate(' + (svgWidth * (7/8)) + ',' + ((svgHeight / 8) + 20) + ')')
             .text('Death')
-            .attr('font-family', 'Arial')
+            .attr('font-family', 'Lucida Sans Unicode')
             .attr('font-size', '12')
             .style("fill", "white")
             .style('fill', 'white')
+            .style('opacity', 0)
+            .transition()
+            .duration(2200)
+            .style('opacity', 1);
 
         svg.append('text')
             .attr('class', 'title')
             .attr('transform', 'translate(' + (svgWidth / 2) + ',' + (svgHeight / 4) + ')')
-            .text('Tarantino Vulgarity Histogram')
-            .attr('font-family', 'Arial')
+            .text('Profanity Use in ' + selectedMovie)
+            .attr('font-family', 'Lucida Sans Unicode')
             .attr('font-size', '16')
             .attr('font-weight', 'bold')
             .style('text-align', 'center')
             .style('fill', 'white')
             .style('text-anchor', 'middle')
+            .style('opacity', 0)
+            .transition()
+            .duration(2200)
+            .style('opacity', 1);
 
         svg.append('text')
             .attr('class', 'x label')
             .attr('transform', 'translate(' + (svgWidth / 2) + ',' + (svgHeight * (2 / 3) + 50) + ')')
             .text('Minutes into Film')
-            .attr('font-family', 'Arial')
+            .attr('font-family', 'Lucida Sans Unicode')
             .attr('font-size', '12')
             .style('fill', 'white')
             .style('text-anchor', 'middle')
+            .style('opacity', 0)
+            .transition()
+            .duration(2200)
+            .style('opacity', 1);
 
         svg.append('text')
             .attr('class', 'y label')
             .attr('transform', 'translate(' + ((svgWidth / 4) - 50) + ',' + (svgHeight /2) + ') rotate(270)')
             .text('Vulgarity Count')
-            .attr('font-family', 'Arial')
+            .attr('font-family', 'Lucida Sans Unicode')
             .attr('font-size', '12')
             .style('fill', 'white')
             .style('text-anchor', 'middle')
+            .style('opacity', 0)
+            .transition()
+            .duration(2200)
+            .style('opacity', 1);
 
     	var toolTip = d3.select('body').append('div')
     			.attr('class', 'tooltip-profanity')
@@ -292,6 +329,13 @@ export function histogram(movieName) {
             svg.selectAll("g.x.axis")
                 .call(xAxis);
 
+            svg.select(".title")
+                .style('opacity', 0)
+                .text('Profanity Use in ' + selectedMovie)
+                .transition()
+                .duration(1200)
+                .style('opacity', 1);
+
             var circle = svg.selectAll('circle')
                 .data(curMovie)
                 .style('opacity', 1)
@@ -354,7 +398,7 @@ export function histogram(movieName) {
             circle = circle.merge(enter);
 
             circle.transition()
-            .duration(1000)
+            .duration(1200)
             .attr('cx', function(d) {
                 return xScale(d.minutes)
             })
