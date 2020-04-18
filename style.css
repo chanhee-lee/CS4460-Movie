@@ -74,3 +74,12 @@ div.tooltip-profanity {
   transform: translateY(4px);
 }
 
+select { 
+  appearance: none; 
+  outline: 0; 
+  background: black; 
+  background-image: none; 
+  font: 1rem Lucida Sans Unicode, sans-serif;
+  color: white;
+  border-radius:3px; 
+} 
