@@ -52,12 +52,15 @@ export function radii(movieMap) {
 		var svgWidth = parseInt(svg.style("width"));
 		var svgHeight = parseInt(svg.style("height"));
 
+		var title_x = (svgWidth / 2) - (SIZE * 8);
+		var title_y = (svgHeight / 2) - (SIZE * 20);
+
 		svg.append('text')
 			.attr('class', 'title')
-			.attr('transform','translate('+ svgWidth / (1512 / 500) +', '+ svgHeight / ( 873 / 50) +')')
+			.attr('transform','translate('+ title_x +', '+ title_y +')')
 			.text('Tarantino\'s Filthy Mouth')
 			.style('fill', 'white')
-			.style("font", "3.0rem Lucida Sans Unicode, sans-serif");
+			.style("font", "2.0rem Lucida Sans Unicode, sans-serif");
 
 	  	// For Each Movie: Make circle 
 	  	var inner = SIZE;
@@ -224,56 +227,82 @@ function getDarkerColor(base, total, current) {
 
 function createAxes(svg) {
 
-	var svgWidth = parseInt(svg.style("width"));
-	var svgHeight = parseInt(svg.style("height"));
+	var svgWidth = parseInt(svg.style("width")); // 1512
+	var svgHeight = parseInt(svg.style("height")); // 873
+
+	var lineLength = SIZE * 15;
 
 	// 3hr axis
 	svg.append('line')
 		.style("stroke", "white")
 		.style("stroke-width", 3)
-		.attr("x1", svgWidth / 2) //756
-		.attr("y1", svgHeight / (873 / 132)) //132
-		.attr("x2", svgWidth / 2) //756
-		.attr("y2", svgHeight / (873 / 420)); //420
+		.attr("x1", svgWidth / 2)
+		.attr("y1", (svgHeight / 2) - 10)
+		.attr("x2", svgWidth / 2)
+		.attr("y2", (svgHeight / 2) - lineLength);
 	
-	// 1hr axis
+	// 45m axis
 	svg.append('line')
 		.style("stroke", "white")
 		.style("stroke-width", 3)
-		.attr("x1", svgWidth / (1512 / 1020)) //1020
-		.attr("y1", svgHeight / (873 / 590)) //590
-		.attr("x2", svgWidth / (1512 / 770)) //770
-		.attr("y2", svgHeight / (873 / 446)); //446
+		.attr("x1", (svgWidth / 2) + 10)
+		.attr("y1", svgHeight / 2)
+		.attr("x2", (svgWidth / 2) + lineLength)
+		.attr("y2", svgHeight / 2);
 
-	// 2hr axis
+	// 1.5hr axis
 	svg.append('line')
 		.style("stroke", "white")
 		.style("stroke-width", 3)
-		.attr("x1", svgWidth / (1512 / 492)) // 492
-		.attr("y1", svgHeight / (873 / 590)) // 590
-		.attr("x2", svgWidth / (1512 / 742)) // 742
-		.attr("y2", svgHeight / (873 / 446));  // 446
+		.attr("x1", svgWidth / 2)
+		.attr("y1", (svgHeight / 2) + 10)
+		.attr("x2", svgWidth / 2)
+		.attr("y2", (svgHeight / 2) + lineLength);
+
+	// 2.25hr axis
+	svg.append('line')
+		.style("stroke", "white")
+		.style("stroke-width", 3)
+		.attr("x1", (svgWidth / 2) - 10)
+		.attr("y1", svgHeight / 2)
+		.attr("x2", (svgWidth / 2) - lineLength)
+		.attr("y2", svgHeight / 2);
 
 	// Create axes labels
-	// width: 1512, height: 873
+	var up_y = (svgHeight / 2) - lineLength - 14;
+	var up_x = (svgWidth / 2) - 12;
+	var right_x = (svgWidth / 2) + lineLength + 14;
+	var right_y = (svgHeight / 2) + 4;
+	var down_y = (svgHeight / 2) + lineLength + 24;
+	var down_x = (svgWidth / 2) - 26;
+	var left_x = (svgWidth / 2) - lineLength - 70;
+	var left_y = (svgHeight / 2) + 4;
+
 	svg.append('text')
 		.attr('class', 'label')
-		.attr('transform','translate('+ svgWidth / (1512 / 732) +', '+ svgHeight / ( 873 / 120) +')') // 732, 120
-		.text('3 hours')
+		.attr('transform','translate('+ up_x +', '+ up_y +')') 
+		.text('3h')
 		.style('fill', 'white')
 		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 
 	svg.append('text')
 		.attr('class', 'label')
-		.attr('transform','translate('+ svgWidth / (1512 / 1010) +', '+ svgHeight / ( 873 / 610) +')') // 1010, 610
-		.text('1 hour')
+		.attr('transform','translate('+ right_x +', '+ right_y +')')
+		.text('45m')
 		.style('fill', 'white')
 		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 
 	svg.append('text')
 		.attr('class', 'label')
-		.attr('transform','translate('+ svgWidth / (1512 / 462) +', '+ svgHeight / ( 873 / 610) +')') // 462, 610
-		.text('2 hours')
+		.attr('transform','translate('+ down_x +', '+ down_y +')') 
+		.text('1h:45m')
+		.style('fill', 'white')
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
+
+	svg.append('text')
+		.attr('class', 'label')
+		.attr('transform','translate('+ left_x +', '+ left_y +')')
+		.text('2h:25m')
 		.style('fill', 'white')
 		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 }
