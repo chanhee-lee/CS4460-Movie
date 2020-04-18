@@ -1,4 +1,4 @@
-#Team Mr.Worldwide - Profanity in Tarantino's Films Across Time
+# Team Mr.Worldwide - Profanity in Tarantino's Films Across Time
 ## How to Run The File
 1. From "https://github.com/chanhee-lee/CS4460-Movie", clone the master branch
 2. From the root of this directory, run the following command: python -m http.server
