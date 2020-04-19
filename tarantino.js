@@ -1,5 +1,4 @@
-// import {histogram} from  './histogram.js';
-import {radii} from './radii.js';
+import {stackedpie} from './stackedpie.js';
 var movieMap = new Map(); 
 var rd = { "title": "Reservoir Dogs", "duration": "100", "year": "1992", "profanity": "431" };
 var pf = { "title": "Pulp Fiction", "duration": "178", "year": "1994", "profanity": "475" };
@@ -15,4 +14,4 @@ movieMap.set("Kill Bill: Vol. 1", kb1)
 movieMap.set("Kill Bill: Vol. 2", kb2)
 movieMap.set("Inglorious Basterds", ib)
 movieMap.set("Django Unchained", du)
-radii(movieMap);
+stackedpie(movieMap);

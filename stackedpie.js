@@ -6,7 +6,7 @@ const SIZE = 20;
 
 alert("DISCLAIMER: contains profanity that some may deem innapropriate or offensive");
 
-export function radii(movieMap) {
+export function stackedpie(movieMap) {
     // Select svg
     var main = d3.select('#main');
 	var svg = d3.select('svg');
