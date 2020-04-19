@@ -48,19 +48,6 @@ export function stackedpie(movieMap) {
 
         // Setup Legend 
 		createLegend(svg, movieArr, color);
-		
-		var svgWidth = parseInt(svg.style("width"));
-		var svgHeight = parseInt(svg.style("height"));
-
-		var title_x = (svgWidth / 2) - (SIZE * 8);
-		var title_y = (svgHeight / 2) - (SIZE * 20);
-
-		svg.append('text')
-			.attr('class', 'title')
-			.attr('transform','translate('+ title_x +', '+ title_y +')')
-			.text('Tarantino\'s Filthy Mouth')
-			.style('fill', 'white')
-			.style("font", "2.0rem Lucida Sans Unicode, sans-serif");
 
 	  	// For Each Movie: Make circle 
 	  	var inner = SIZE;
@@ -305,4 +292,27 @@ function createAxes(svg) {
 		.text('2h:25m')
 		.style('fill', 'white')
 		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
+
+	var title_x = (svgWidth / 2) - (SIZE * 8) - 15;
+	var title_y = up_y - 50;
+	var subtitle_x = (svgWidth / 2) - (SIZE * 8);
+	var subtitle_y = up_y - 26;
+	var font_size_title = SIZE * 1.75;
+	var font_size_subtitle = SIZE / 1.25;
+
+	svg.append('text')
+		.attr('class', 'title')
+		.attr('transform','translate('+ title_x +', '+ title_y +')')
+		.text('Tarantino\'s Filthy Mouth')
+		.style('fill', 'white')
+		.style("font", "2.0rem Lucida Sans Unicode, sans-serif")
+		.style("font-size", font_size_title);
+
+	svg.append('text')
+		.attr('class', 'title')
+		.attr('transform','translate('+ subtitle_x +', '+ subtitle_y +')')
+		.text('Use of Profanity in Tarantino\'s Films Over Time')
+		.style('fill', 'white')
+		.style("font", "1.0rem Lucida Sans Unicode, sans-serif")
+		.style("font-size", font_size_subtitle);
 }
