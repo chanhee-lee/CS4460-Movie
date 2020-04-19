@@ -297,10 +297,10 @@ function createAxes(svg) {
 		.style('fill', 'white')
 		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 
-	var title_x = (svgWidth / 2) - (SIZE * 8) - 15;
+	var title_x = (svgWidth / 30);
 	var title_y = up_y - 50;
-	var subtitle_x = (svgWidth / 2) - (SIZE * 8);
-	var subtitle_y = up_y - 26;
+	var subtitle_x = svgWidth / 28;
+	var subtitle_y = up_y - 22;
 	var font_size_title = SIZE * 1.75;
 	var font_size_subtitle = SIZE / 1.25;
 
