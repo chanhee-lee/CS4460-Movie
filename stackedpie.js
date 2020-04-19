@@ -73,11 +73,15 @@ export function stackedpie(movieMap) {
 }
 
 function createLegend(svg, movieArr, colorArr) {
+
+	var svgWidth = parseInt(svg.style("width")); // 1512
+	var svgHeight = parseInt(svg.style("height")); // 873
+
     svg.selectAll("dots")
       .data(movieArr)
       .enter()
       .append("circle")
-        .attr("cx", 1100)
+        .attr("cx", (svgWidth * (7/9)))
         .attr("cy", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
         .attr("r", 7)
 		.style("fill", function(d, i){ return colorArr[i]})
@@ -89,7 +93,7 @@ function createLegend(svg, movieArr, colorArr) {
       .data(movieArr)
       .enter()
       .append("text")
-        .attr("x", 1120)
+        .attr("x", (svgWidth * (7/9)) + 20)
         .attr("y", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
 		.style("fill", "white")
         .text(function(d, i){ 
