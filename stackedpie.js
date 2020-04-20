@@ -4,7 +4,7 @@ var movieIntervalData = [];
 const MINUTE = 5; 
 const SIZE = 20; 
 
-alert("DISCLAIMER: contains profanity that some may deem innapropriate or offensive");
+alert("DISCLAIMER: contains profanity that some may deem inappropriate or offensive");
 
 export function stackedpie(movieMap) {
     // Select svg
