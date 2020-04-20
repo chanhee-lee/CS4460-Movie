@@ -14,17 +14,15 @@ export function histogram(movieName) {
     var divWidth = parseInt(div.style("width"));
     var divHeight = parseInt(div.style("height"));
 
-    console.log(svgWidth)
-    console.log(svgHeight)
-
     // Load tarantino wordcount dataset
     var wordDate = d3.csv('tarantino.csv').then(function(dataset) {
         
+        // Saves all the movie titles from the data set to an array
         var movieTitles = [...new Set(dataset.map(item => item.movie))];
         var titleObjArr = []
         movieTitles.forEach(element => titleObjArr.push({title: element}))
-        console.log(titleObjArr);
 
+        // Creates back button to go back to stackedpie.js
         var backButton = d3.select('button')
             .style('position', 'absolute')
             .style('left', '' + (divWidth / 6) + 'px')
@@ -49,6 +47,7 @@ export function histogram(movieName) {
                 return d.title;
             })
         
+        // Filters the dataset to only render the currently selected film
         var selectedMovie = selected;
         var curMovie = dataset.filter(function(element) {
             return element.movie == selectedMovie
@@ -58,6 +57,7 @@ export function histogram(movieName) {
         var prevMinutes = -1;
         var count = 1;
     
+        // Counts each profanity instance at each minute and adds it to the dataset in order to be used for the histogram
         for (let i = 0; i < curMovie.length; i++) {
             curMinutes = curMovie[i].minutes
             if (curMinutes == prevMinutes) {
@@ -65,15 +65,11 @@ export function histogram(movieName) {
             } else {
                 count = 1;
             }
-            console.log(count)
             curMovie[i].occurNum = count
-            console.log(curMovie[i].occurNum)
             prevMinutes = curMinutes
         }
-    
-        console.log(curMovie)
 
-        // Set up axes, labels, and legend.
+        // Set up axes, title, labels, and legend.
         var xDomain = d3.extent(curMovie, function(d) {
             return +d.minutes
         })
@@ -85,8 +81,6 @@ export function histogram(movieName) {
         var yDomain = d3.extent(curMovie, function(d) {
             return +d.occurNum
         })
-    
-        console.log(yDomain)
     
         var yScale = d3.scaleLinear()
             .domain(yDomain)
@@ -105,7 +99,6 @@ export function histogram(movieName) {
             .duration(2200)
             .style('opacity', 1);
 
-        
         svg.append('g')
             .attr('class', 'y axis')
             .attr('transform', 'translate(' + (svgWidth / 4 - 10) + ', 0)')
@@ -261,14 +254,14 @@ export function histogram(movieName) {
             })
             .style('opacity', function(d) {
             	if (d.minutes < intervalEnd && d.minutes >= interval) {
-            		console.log(d.minutes);
             		return 1;
             	} else {
             		return 0.1;
             	}
             });
 
-            
+        // Render x and y axes
+
         svg.selectAll("g.y.axis")
             .call(yAxis)
 
@@ -292,6 +285,7 @@ export function histogram(movieName) {
             var prevMinutes = -1;
             var count = 1;
         
+            // Counts profanity instances to stack dots on top of each other in histogram
             for (let i = 0; i < curMovie.length; i++) {
                 curMinutes = curMovie[i].minutes
                 if (curMinutes == prevMinutes) {
@@ -303,6 +297,7 @@ export function histogram(movieName) {
                 prevMinutes = curMinutes
             }
             
+            // create x and y scales based on the runtime and max profanity instances per movie
             var xDomain = d3.extent(curMovie, function(d) {
             return +d.minutes
             })
@@ -314,8 +309,6 @@ export function histogram(movieName) {
             var yDomain = d3.extent(curMovie, function(d) {
                 return +d.occurNum
             })
-
-            console.log(yDomain)
 
             var yScale = d3.scaleLinear()
                 .domain(yDomain)
@@ -331,6 +324,8 @@ export function histogram(movieName) {
             svg.selectAll("g.x.axis")
                 .call(xAxis);
 
+
+            // Dynamically updates title based on selected movie
             svg.select(".title")
                 .style('opacity', 0)
                 .text('Profanity Use in ' + selectedMovie)
@@ -338,6 +333,7 @@ export function histogram(movieName) {
                 .duration(1200)
                 .style('opacity', 1);
 
+            // Draw the circles which represent each word / death
             var circle = svg.selectAll('circle')
                 .data(curMovie)
                 .style('opacity', 1)
@@ -366,6 +362,7 @@ export function histogram(movieName) {
 		                		.style('opacity', 0);
 	            });
 
+            // Remove circles that are no longer needed upon switching film
             circle.exit().remove();
 
             // Separates new circles from old circles. New circles transition from the center while old circles transition from previous position.
@@ -400,6 +397,7 @@ export function histogram(movieName) {
 
             circle = circle.merge(enter);
 
+            // Add nice transition for when data updates
             circle.transition()
             .duration(1200)
             .attr('cx', function(d) {
@@ -414,6 +412,6 @@ export function histogram(movieName) {
             });
         }
     })
-
 }
+
 histogram();
