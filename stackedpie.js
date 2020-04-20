@@ -4,7 +4,7 @@ var movieIntervalData = [];
 const MINUTE = 5; 
 const SIZE = 20; 
 
-alert("DISCLAIMER: contains profanity that some may deem innapropriate or offensive");
+alert("DISCLAIMER: contains profanity that some may deem inappropriate or offensive");
 
 export function stackedpie(movieMap) {
     // Select svg
@@ -54,9 +54,9 @@ export function stackedpie(movieMap) {
 	  	var outer = SIZE * 2;
 	  	for (var i = 0; i < movieArr.length; i++) {
 		    // Make circles based on data 
-		    var arcInterval = new Array(); 	// 
-		    for (var j = 0; j < 36; j++) {
-		    	arcInterval.push(1);
+		    var arcInterval = new Array(); 	// Just an array of size 36, with all elements being 1 
+		    for (var j = 0; j < 36; j++) {	// This array is used to make each pie chart have the same intervals 
+		    	arcInterval.push(1);		// Note that the 1, is just so each interval is even in the pie chart 
 		    }
 			var data = movieIntervalData[i].intervalData;
 			var wordData = movieIntervalData[i].intervalWords;
@@ -81,7 +81,7 @@ function createLegend(svg, movieArr, colorArr) {
       .data(movieArr)
       .enter()
       .append("circle")
-        .attr("cx", (svgWidth * (7/9)))
+        .attr("cx", 1200)
         .attr("cy", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
         .attr("r", 7)
 		.style("fill", function(d, i){ return colorArr[i]})
@@ -93,7 +93,7 @@ function createLegend(svg, movieArr, colorArr) {
       .data(movieArr)
       .enter()
       .append("text")
-        .attr("x", (svgWidth * (7/9)) + 20)
+        .attr("x", 1220)
         .attr("y", function(d,i){ return 100 + i*30}) // 100 is where the first dot appears. 25 is the distance between dots
 		.style("fill", "white")
         .text(function(d, i){ 
@@ -208,6 +208,9 @@ function getColor(base, total, current) {
     return c; 
 }
 
+/**
+* Gets a darker color for the outline of a movie arc
+*/
 function getDarkerColor(base, total, current) {
     var color = "rgba("+base+",1)"; 
     color = d3.hsl(color);
@@ -217,7 +220,6 @@ function getDarkerColor(base, total, current) {
 }
 
 function createAxes(svg) {
-
 	var svgWidth = parseInt(svg.style("width")); // 1512
 	var svgHeight = parseInt(svg.style("height")); // 873
 
@@ -269,6 +271,7 @@ function createAxes(svg) {
 	var left_x = (svgWidth / 2) - lineLength - 70;
 	var left_y = (svgHeight / 2) + 4;
 
+	// Axes labels 
 	svg.append('text')
 		.attr('class', 'label')
 		.attr('transform','translate('+ up_x +', '+ up_y +')') 
@@ -297,6 +300,7 @@ function createAxes(svg) {
 		.style('fill', 'white')
 		.style("font", "1.0rem Lucida Sans Unicode, sans-serif");
 
+	// Title labels 
 	var title_x = (svgWidth / 30);
 	var title_y = svgHeight / 30;
 	var subtitle_x = svgWidth / 28;
