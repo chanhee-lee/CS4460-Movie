@@ -8,6 +8,7 @@ export function histogram(movieName) {
     var svg = d3.select('svg');
     var div = d3.select('div');
     
+    // Get requried dimensions
     var svgWidth = parseInt(svg.style("width"));
     var svgHeight = parseInt(svg.style("height"));
     var divWidth = parseInt(div.style("width"));
@@ -33,6 +34,7 @@ export function histogram(movieName) {
             })
             .text('Back');
 
+        // Movie selector
         var selector = d3.select('select')
             .style('position', 'absolute')
             .style('left', '' + (divWidth * (3/4))+ 'px')
@@ -70,7 +72,8 @@ export function histogram(movieName) {
         }
     
         console.log(curMovie)
-    
+
+        // Set up axes, labels, and legend.
         var xDomain = d3.extent(curMovie, function(d) {
             return +d.minutes
         })
@@ -195,10 +198,12 @@ export function histogram(movieName) {
             .duration(2200)
             .style('opacity', 1);
 
+        // Add tooltips
     	var toolTip = d3.select('body').append('div')
     			.attr('class', 'tooltip-profanity')
     			.style('opacity', 0);
 
+        // Draw first visualization for selected interval from stackedpie visualization.
         var circle = svg.selectAll('circle')
             .data(curMovie)
             .enter()
@@ -270,13 +275,14 @@ export function histogram(movieName) {
         svg.selectAll("g.x.axis")
             .call(xAxis);
 
+        // Call update() to update the visualization based on selected movie.
         d3.select("#dropdown")
             .on("change", function(d) {
                 selectedMovie = this.value;
                 update();
             })
 
-        
+        // Updates the visualization with appropriate data and axes based on selected movie.
         function update() {
             var curMovie = dataset.filter(function(element) {
                 return element.movie == selectedMovie
@@ -362,6 +368,7 @@ export function histogram(movieName) {
 
             circle.exit().remove();
 
+            // Separates new circles from old circles. New circles transition from the center while old circles transition from previous position.
             var enter = circle.enter().append('circle')
             	.attr('cx', 320)
             	.attr('cy', 160)
@@ -405,8 +412,6 @@ export function histogram(movieName) {
             .attr('fill', function(d) {
                     return (d.type == 'word') ? 'white' : 'red'
             });
-
-
         }
     })
 
